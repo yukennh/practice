@@ -8,10 +8,11 @@ def index():
     if request.method == "POST":
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
+        year = request.form.get("year")
         month = request.form.get("month")
         day = request.form.get("day")
 
-        birthday = f"{month.zfill(2)}-{day.zfill(2)}"
+        birthday = f"{year.zfill(4)}/{month.zfill(2)}/{day.zfill(2)}"
 
         conn = sqlite3.connect("birthday.db")
         c = conn.cursor()
