@@ -5,7 +5,7 @@ for x in range (1,11):
     doubles.append(x * 2)
 print(doubles)
 
-#sample of updating a using a for loop with 1 line code
+#sample of updating a list using a for loop with 1 line code
 triples = [x * 3 for x in range(1, 11)]
 print(triples)
 
