@@ -35,3 +35,17 @@ while happiness < 1 or happiness > 10:
     happiness = int(input("From 1 to 10, 10 being the highest, how happy are you today?"))
 print(f"{name}, {age} years old has a lot of ideas. His happiness level is at {happiness}. Have a great day!")
 
+
+#sample of while not loop with multiple possible condition
+action = str(input("What do you want to do?"))
+
+while action not in ['s','t','c']:
+    print(f"\n Entry not valid. Below are the following options \n t to register a teacher \n s to create a subject \n c to create a class \n")
+    action = str(input("What do you want to do?"))
+
+if action == 's':
+    print("proceed with the creation of subject")
+elif action == 't':
+    print("proceed with registration of teacher")
+elif action == 'c':
+    print("proceed with the creation of class")
