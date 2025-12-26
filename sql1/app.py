@@ -17,9 +17,12 @@ if action == 's':
     subj_code = str(input("Subject Code: "))
     subj_credits = float(input("Subject Credits: "))
     
-    subj_confirm = bool(input(f"Confirm Changes\nSubject Name:{subj_name} \nSubject Code:{subj_name} \nSubject Credits:{subj_credits} \n(y/n)?"))
-        
-    print(f"INSERT INTO subjects (subject_name, subject_code, credits) VALUES({subj_name},{subj_code},{subj_credits})")
+    def create_s(name, code ,credits):
+        cursor.execute("INSERT INTO subjects (subject_name, subject_code, credits) VALUES(?,?,?)",(name, code, credits))
+        conn.commit()
+        print("Your subject is created!")
+        conn.close()
+    create_s(subj_name, subj_code, subj_credits)
 
 elif action == 't':
     print("Provide teacher's details.")
@@ -37,8 +40,10 @@ elif action == 'c':
     print("Room: ")
     
 
+
 #define action
     #create a subject
+
     #register a teacher
     #create a class
     
