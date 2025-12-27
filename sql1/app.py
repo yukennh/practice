@@ -1,13 +1,11 @@
 import sqlite3
-conn = sqlite3.connect("school.db")
-cursor = conn.cursor()
 
 un = str(input("user name: "))
 print(f"hello {un}!")
 
 action = str(input("What do you want to do?"))
 
-while action not in ['s','t','c']:
+while action not in ['s','t','c','q']:
     print(f"\n Entry not valid. Below are the following options \n t to register a teacher \n s to create a subject \n c to create a class \n")
     action = str(input("What do you want to do?"))
 
@@ -18,6 +16,8 @@ if action == 's':
     subj_credits = float(input("Subject Credits: "))
     
     def create_s(name, code ,credits):
+        conn = sqlite3.connect("school.db")
+        cursor = conn.cursor()
         cursor.execute("INSERT INTO subjects (subject_name, subject_code, credits) VALUES(?,?,?)",(name, code, credits))
         conn.commit()
         print("Your subject is created!")
@@ -30,20 +30,47 @@ elif action == 't':
     t_lname = str(input("Last Name: "))
     t_email = str(input("Email Address: "))
     t_department = str(input("Department: "))
-    print(f"INSERT INTO teachers (first_name,last_name,email,department) VALUES({t_fname},{t_lname},{t_email},{t_department})")
+
+    def create_t(f_name, l_name, email, department):
+        conn = sqlite3.connect("school.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO teachers (first_name,last_name,email,department) VALUES(?,?,?,?)",(f_name, l_name, email, department))
+        conn.commit()
+        print("Your subject is created!")
+        conn.close()
+    create_t(t_fname, t_lname, t_email, t_department)
+
 elif action == 'c':
-    print("Provide class details.")
-    print("Subject ID: ")
-    print("Teacher ID: ")
-    print("Semester: ")
-    print("Schedule: ")
-    print("Room: ")
+    conn = sqlite3.connect("school.db")
+    cursor = conn.cursor()
+    print("Provide class details.\n")
     
+    cursor.execute("SELECT subject_id, subject_name FROM subjects")
+    s_entries = cursor.fetchall()
+    for s_entry in s_entries:
+        print(s_entry)
+    c_subject = int(input("Subject ID (see IDs above): "))
+    
+    cursor.execute("SELECT teacher_id, first_name || ' ' || last_name, department FROM teachers")
+    t_entries = cursor.fetchall()
+    for t_entry in t_entries:
+        print(t_entry)
+    c_teacher = int(input("Professor ID (see IDs above): ")) 
+
+    c_semester = str(input("\nSemester: "))
+    c_schedule = str(input("\nSchedule: "))
+    c_room = str(input("\n Room: "))
+    
+    def create_c(subject, teacher, semester, schedule, room):
+        cursor.execute("INSERT INTO classes (subject_id, teacher_id, semester, schedule, room) VALUES (?,?,?,?,?)",(subject, teacher, semester, schedule, room))
+        conn.commit()
+        print("Class created successfully!")
+        conn.close()
+    create_c(c_subject, c_teacher, c_semester, c_schedule, c_room)
+
+elif action == 'q':
+    print(f"goodbye {un}!")
 
 
-#define action
-    #create a subject
-
-    #register a teacher
-    #create a class
+    
     
